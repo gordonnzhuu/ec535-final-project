@@ -6,7 +6,7 @@ from skimage import io  # type: ignore
 from skimage.io import imread  # type: ignore
 
 # Load the TensorFlow Lite model
-model_path = "food_model.tflite"  # Update with the correct path to your .tflite model
+model_path = "/home/pi/.cache/kagglehub/models/google/aiy/tfLite/vision-classifier-food-v1/1/1.tflite"  # Update with the correct path to your .tflite model
 interpreter = tflite.Interpreter(model_path=model_path)
 interpreter.allocate_tensors()
 
@@ -19,7 +19,7 @@ labelmap = "aiy_food_V1_labelmap.csv"
 classes = list(pd.read_csv(labelmap)["name"])
 
 # Parameters
-input_shape = (224, 224)
+input_shape = (192, 192)
 confidence_threshold = 0.4
 
 # Load image from file path
@@ -33,7 +33,7 @@ image = cv2.resize(image, dsize=input_shape, interpolation=cv2.INTER_CUBIC)
 image = image / image.max()
 
 # Model expects an input of (1, 224, 224, 3)
-images = np.expand_dims(image.astype(np.float32), axis=0)
+images = np.expand_dims(image.astype(np.uint8), axis=0)
 
 # Set the input tensor
 interpreter.set_tensor(input_details[0]['index'], images)
