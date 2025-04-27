@@ -10,3 +10,18 @@ Software: OpenCV + Python
 
 Model architecture: MobileNet V1.0
 Model: Tensorflow Lite
+
+# how to use
+
+1. enter virtual environment 
+```
+source .venv/bin/activate
+```
+2. run food-detector.py
+```
+python3 food-detector.py
+```
+3. enter path to jpg file
+```
+img/noods.jpg
+``` 
