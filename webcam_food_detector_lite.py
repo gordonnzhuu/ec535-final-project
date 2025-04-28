@@ -16,17 +16,26 @@ h, w = inp_det['shape'][1], inp_det['shape'][2]
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)  # 0 is usually the default webcam
+# cap.set(cv2.CAP_PROP_FRAME_WIDTH, 320)
+# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 240)
 
 if not cap.isOpened():
     raise RuntimeError("Could not open webcam")
 
 print("Press 'q' to quit.")
 
+frame_count = 0
+frame_interval = 3
+
 while True:
     ret, frame = cap.read()
     if not ret:
         print("Failed to grab frame.")
         break
+
+    frame_count += 1
+    if frame_count % frame_interval != 0:
+        continue
 
     # Preprocess frame
     img_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
