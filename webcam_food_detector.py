@@ -1,13 +1,10 @@
 import tensorflow_hub as hub  # type: ignore
-import numpy as np # type: ignore
-import pandas as pd # type: ignore
+import numpy as np 
+import pandas as pd 
 import cv2  # type: ignore
 
 # Load the TensorFlow Hub layer
-model = hub.KerasLayer(
-    '/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1',
-    trainable=False
-)
+model = hub.KerasLayer('/home/pi/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
 
 # Load label map
 labelmap = "aiy_food_V1_labelmap.csv"
