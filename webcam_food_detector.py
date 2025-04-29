@@ -1,10 +1,13 @@
-import tensorflow_hub as hub # type: ignore
+import tensorflow_hub as hub  # type: ignore
 import numpy as np
 import pandas as pd
-import cv2 # type: ignore
+import cv2  # type: ignore
 
-# Load the TensorFlow model
-model = hub.KerasLayer('/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
+# Load the TensorFlow Hub layer
+model = hub.KerasLayer(
+    '/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1',
+    trainable=False
+)
 
 # Load label map
 labelmap = "aiy_food_V1_labelmap.csv"
@@ -12,14 +15,13 @@ classes = list(pd.read_csv(labelmap)["name"])
 
 # Parameters
 input_shape = (224, 224)
-confidence_threshold = 0.5
+confidence_threshold = 0.4
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
-
 if not cap.isOpened():
     print("Error: Could not open webcam.")
-    exit()
+    exit(1)
 
 print("Press 'q' to quit.")
 
@@ -29,33 +31,46 @@ while True:
         print("Error: Failed to capture image.")
         break
 
-    # Resize the frame
-    resized_frame = cv2.resize(frame, dsize=input_shape, interpolation=cv2.INTER_CUBIC)
-    # Scale values to [0,1]
-    normalized_frame = resized_frame / 255.0
-    # Model expects an input of (?,224,224,3)
-    images = np.expand_dims(normalized_frame, 0)
+    # Convert BGR (OpenCV default) to RGB
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    # Use model to predict food
-    output = model(images)
-    probabilities = output.numpy()[0]
-    predicted_index = np.argmax(probabilities)
-    confidence_level = probabilities[predicted_index]
+    # Resize to model input size
+    resized = cv2.resize(rgb, dsize=input_shape, interpolation=cv2.INTER_CUBIC)
 
-    # Display prediction
-    if confidence_level >= confidence_threshold:
-        prediction_text = f"Prediction: {classes[predicted_index]} ({confidence_level:.2f})"
+    # Normalize pixel values to [0, 1]
+    normalized = resized.astype(np.float32) / 255.0
+
+    # Add batch dimension: (1, 224, 224, 3)
+    batch = np.expand_dims(normalized, axis=0)
+
+    # Run the model
+    output = model(batch)               # Returns a Tensor
+    probabilities = output.numpy()[0]   # Convert to NumPy, remove batch dim
+
+    # Find best prediction
+    pred_idx = np.argmax(probabilities)
+    confidence = probabilities[pred_idx]
+
+    # Prepare display text
+    if confidence >= confidence_threshold:
+        text = f"{classes[pred_idx]} ({confidence:.2f})"
     else:
-        prediction_text = f"Not food ({confidence_level:.2f})"
+        text = f"Not food ({confidence:.2f})"
 
-    # Show the frame with prediction
-    cv2.putText(frame, prediction_text, (10, 30), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2, cv2.LINE_AA)
+    # Overlay text on the original BGR frame
+    cv2.putText(
+        frame, text, (10, 30),
+        cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+        (0, 255, 0), 2, cv2.LINE_AA
+    )
+
+    # Show result
     cv2.imshow("Food Detector", frame)
 
-    # Break the loop on 'q' key press
+    # Exit on 'q'
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
-# Release resources
+# Clean up
 cap.release()
 cv2.destroyAllWindows()
