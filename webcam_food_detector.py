@@ -15,7 +15,7 @@ classes = list(pd.read_csv(labelmap)["name"])
 
 # Parameters
 input_shape = (224, 224)
-confidence_threshold = 0.4
+confidence_threshold = 0.5
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -41,7 +41,7 @@ while True:
     normalized = resized.astype(np.float32) / 255.0
 
     # Add batch dimension: (1, 224, 224, 3)
-    batch = np.expand_dims(normalized, axis=0)
+    batch = np.expand_dims(normalized, 0)
 
     # Run the model
     output = model(batch)               # Returns a Tensor
@@ -60,7 +60,7 @@ while True:
     # Overlay text on the original BGR frame
     cv2.putText(
         frame, text, (10, 30),
-        cv2.FONT_HERSHEY_SIMPLEX, 1.0,
+        cv2.FONT_HERSHEY_SIMPLEX, 0.75,
         (0, 255, 0), 2, cv2.LINE_AA
     )
 
