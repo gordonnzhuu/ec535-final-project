@@ -3,8 +3,8 @@ import tensorflow_hub as hub # type: ignore
 # model = hub.KerasLayer('/home/pi/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
 model = hub.KerasLayer('/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
 
-import numpy as np
-import pandas as pd
+import numpy as np # type: ignore
+import pandas as pd # type: ignore
 import cv2 # type: ignore
 from skimage import io # type: ignore
 from skimage.io import imread # type: ignore
