@@ -1,7 +1,7 @@
-import tensorflow_hub as hub
+import tensorflow_hub as hub # type: ignore
 import numpy as np
 import pandas as pd
-import cv2
+import cv2 # type: ignore
 
 # Load the TensorFlow model
 model = hub.KerasLayer('/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')

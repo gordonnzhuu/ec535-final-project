@@ -1,13 +1,13 @@
-import tensorflow_hub as hub
+import tensorflow_hub as hub # type: ignore
 
 # model = hub.KerasLayer('/home/pi/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
 model = hub.KerasLayer('/Users/gordo/.cache/kagglehub/models/google/aiy/tensorFlow1/vision-classifier-food-v1/1')
 
 import numpy as np
 import pandas as pd
-import cv2
-from skimage import io
-from skimage.io import imread
+import cv2 # type: ignore
+from skimage import io # type: ignore
+from skimage.io import imread # type: ignore
 
 image_jpg = input("Enter the path to the jpg file: ")
 labelmap = "aiy_food_V1_labelmap.csv"
