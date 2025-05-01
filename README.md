@@ -1,15 +1,15 @@
 # ec535-final-project
 
-Project: Computer vision
+### Project: Real-time Food Classifier 
 
-Goal: Detect different types of foods and show nutrition facts of each food
+### Goal: Used a Raspberry Pi 5 and webcam to detect and classify foods using a lightweight neural network Tensorflow Lite
 
-Hardware: Raspberry Pi/Beaglebone + Camera
+### Hardware: Raspberry Pi 5, Logitech C270 webcam
 
-Software: OpenCV + Python
+### Software: Raspberry Pi OS, Tensorflow Lite, OpenCV, Python
 
-Model architecture: MobileNet V1.0
-Model: Tensorflow Lite
+### Model Architecture: MobileNet V1.0
+### Model: Tensorflow Lite
 
 # how to use
 
@@ -17,11 +17,8 @@ Model: Tensorflow Lite
 ```
 source .venv/bin/activate
 ```
-2. run food-detector.py
+
+2. run webcam_food_detector_lite.py
 ```
-python3 food-detector.py
+python3 webcam_food_detector_lite.py
 ```
-3. enter path to jpg file
-```
-img/noods.jpg
-``` 
