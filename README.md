@@ -11,7 +11,7 @@
 ### Model Architecture: MobileNet V1.0
 ### Model: Tensorflow Lite
 
-# how to use
+# how to use:
 
 1. enter virtual environment 
 ```
