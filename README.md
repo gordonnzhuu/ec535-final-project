@@ -13,12 +13,19 @@
 
 # how to use:
 
-1. enter virtual environment 
+1. create a virtual environment
 ```
-source .venv/bin/activate
+python3 -m venv venv 
 ```
-
-2. run webcam_food_detector_lite.py
+2. enter virtual environment 
+```
+source venv/bin/activate
+```
+3. download dependencies
+```
+pip install numpy pandas tflite-runtime opencv-python ai_edge_litert kagglehub
+```
+4. run webcam_food_detector_lite.py
 ```
 python3 webcam_food_detector_lite.py
 ```

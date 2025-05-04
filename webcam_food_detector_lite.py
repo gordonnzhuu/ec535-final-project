@@ -4,7 +4,7 @@ import cv2
 from ai_edge_litert.interpreter import Interpreter
 
 # Load model and labels
-interp = Interpreter(model_path='/home/pi/.cache/kagglehub/models/google/aiy/tfLite/vision-classifier-food-v1/1/1.tflite')
+interp = Interpreter(model_path='/home/gordonz/.cache/kagglehub/models/google/aiy/tfLite/vision-classifier-food-v1/1/1.tflite')
 interp.allocate_tensors()
 labelmap = "aiy_food_V1_labelmap.csv"
 classes = list(pd.read_csv(labelmap)["name"])
